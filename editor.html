@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+        <script data-main="js/main" src="http://requirejs.org/docs/release/2.1.6/minified/require.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css"></link>
+        <link rel="stylesheet" href="css/style.css"></script>
+    </head>
+    <body>
+        <h1>SPEC-O-MATIC</h1>
+        <span style="background-color: lightgray; width: 100%"><a href"#" id="help">help!</a></span>
+        <div id="help-list" style="background-color: lightgray;">
+            <ul>
+                <li><strong>Enter:</strong> goes to the next step (or table line), if you're currently in the last, you will create a new one.</li>
+                <li><strong>Shift+Enter:</strong> goes to the previous step (or table line), if you're currently in the first, you will create a new one.</li>
+                <li><strong>Ctrl+Enter:</strong> creates a new step (or table line) right after current line. </li>
+                <li><strong>Ctrl+Shift+Enter:</strong> creates a new step (or table line) right before current line. </li>
+                <li><strong>Tab:</strong> if inside a table, goes to the next column, or if in the end of the row, creates a new column (but only if in the first row); if you're on a step, it creates a new table. </li>
+                <li><strong>Shift+Tab:</strong> goes to the previous column, or if in the beginning of the first row, it creates a new column. </li>
+                <li><strong>Click:</strong> step or table cell to start editing. </li>
+                <li><strong>IF THE INPUT DISAPPEARED AND YOU DON'T HAVE ANY STEP TO START FROM, RELOAD THE PAGE.</strong></li>
+            </ul>
+        </div>
+        
+        <!-- ko foreach: steps.steps -->
+        <p>
+        <!-- ko if: isediting -->
+        <input type="text" class="step" data-bind="value: value, valueUpdate: 'afterkeydown', hasfocus: hasfocus, event: {blur: blur, keydown: keyval}"></input>
+        <!-- /ko -->
+        <!-- ko ifnot: isediting -->
+        <span data-bind="text: value, click: click"></span>
+        <!-- /ko -->
+        <img data-bind="visible: ajaxloading" src="img/ajax-loader.gif" class="ajax-loader" /> 
+        <table style="margin-left: 20px;">
+            <tbody data-bind="foreach: { data: table.steps, as: 'row'}">
+                <tr data-bind="foreach: {data: row.steps, as: 'cell'}">
+                <!-- ko if: cell.isfirst -->
+                <td>|</td>
+                <!-- /ko -->
+                <td>
+                <!-- ko if: cell.isediting -->
+                <input type="text" data-bind="value: cell.value, valueUpdate: 'afterkeydown', hasfocus: cell.hasfocus, event: {blur: cell.blur, keydown: cell.keyval}"></input>
+                <!-- /ko -->
+                <!-- ko ifnot: cell.isediting -->
+                <span data-bind="text: cell.value, click: cell.click"></span>
+                <!-- /ko -->
+                </td>
+                <td>
+                |
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </p>
+        <!-- /ko -->
+    </body>
+</html>
