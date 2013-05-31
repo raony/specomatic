@@ -3,8 +3,8 @@ define(function () {
         this.listener = listener;
     };
 
-    ProtoStep.prototype.addtabrow = function (cellvalues) {
-        this.table.addrow(cellvalues);
+    ProtoStep.prototype.addtabrow = function (value) {
+        this.table.newstep(0, value);
     }
 
     return ProtoStep;

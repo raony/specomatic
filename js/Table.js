@@ -29,7 +29,6 @@ define(['ProtoList', 'Header', 'Row', 'utils'], function (ProtoList, Header, Row
             }
         }
         this.steps.splice(position !== undefined ? position : this.length(), 0, step);
-        this.select(step); 
         return step;
     }
 

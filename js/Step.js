@@ -27,9 +27,21 @@ define(['Table', 'ValuedStep', 'utils'], function (Table, ValuedStep, utils) {
                     });
                     self.table.addrow(values, self.table.length()); 
                 });
-            }).always(function () {self.ajaxloading(false);});
+            }).always(function () {
+                self.ajaxloading(false);
+            });
         }
 
+    }
+
+    Step.prototype.keyval = function(element, event) {
+        if (!event.shiftKey && utils.keycode(event) == 13 && this.table.length() > 0) {
+            event.preventDefault();
+            this.table.select(this.table.elementAt(0));
+            this.stopediting();
+            return false;
+        }
+        return Step.superClass_.keyval.call(this, element, event);
     }
 
     return Step;

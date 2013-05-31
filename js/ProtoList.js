@@ -100,7 +100,7 @@ define(['utils'], function (utils) {
         if (this.hasprevious()) {
             var previous = this.getprevious();
             var selected = this.selected();
-            previous.addtabrow([selected.value()]);
+            previous.addtabrow(selected.value());
             this.remove(selected);
         }
     }
